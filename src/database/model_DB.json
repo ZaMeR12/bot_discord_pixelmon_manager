@@ -1,0 +1,14 @@
+{
+	"_id":"650fc6b3d4d2efecc7082f47",
+	"discord_id": "521369475812365948",
+	"minecraft_username":"Test",
+	"isChampion":false,
+	"succeedLeague":false,
+	"badges": [
+		{
+			"type": "fire",
+			"obtained":"023-09-20"
+		}
+	],
+	"inscryption": "2023-09-24T07:58:52.580+00:00"
+}

@@ -1,0 +1,11 @@
+## Connection to the bot account ##
+CONNECTION_BOT = XXX
+
+## Discord server id ##
+SERVER_DISCORD = XXX
+
+## Bot id ##
+CLIENT_ID = XXX
+
+## Connection to MongoDB ##
+MONGO_SERVER = XXX
