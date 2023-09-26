@@ -2,6 +2,10 @@ const _ = require('lodash');
 const Trainer = require('../../models/Trainer');
 const { ApplicationCommandOptionType } = require('discord.js');
 
+
+/**
+ * Command to create an account of the user who call it
+ */
 module.exports = {
     deleted: false,
     name: "create",

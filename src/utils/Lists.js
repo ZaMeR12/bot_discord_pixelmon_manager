@@ -1,4 +1,5 @@
 module.exports = {
+    // List of all persmissions roles for badges
     rolesPermission: [
         "Gym Leader - Water",
         "Gym Leader - Fire",
@@ -19,6 +20,7 @@ module.exports = {
         "Gym Leader - Dragon",
         "Gym Leader - Rock"
     ],
+    //List of all types of pokemons
     listTypes: [
         'water',
         'fire',

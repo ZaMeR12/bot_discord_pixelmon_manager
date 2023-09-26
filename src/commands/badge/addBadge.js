@@ -4,6 +4,7 @@ const lists = require('../../utils/Lists');
 
 const choices = [];
 
+//To give the user all the type exists
 for (var type in lists.listTypes){
  choices.push({
     name:lists.listTypes[type],
@@ -11,6 +12,13 @@ for (var type in lists.listTypes){
  });                   
 };
 
+
+/**
+ * Command to add a badge.
+ * The role is important to determinate if it's possible to the user to add
+ * the badge to someone.
+ * WARNING: The user have to just have one leader role, but can be admin too.
+ */
 module.exports = {
     deleted: false,
     name: "add_badge",
@@ -40,9 +48,11 @@ module.exports = {
             };
             const trainer = await Trainer.findOne(queryExist);
             if (trainer) {
+                // Validate that the list of badges can't be higher thant the number of types
                 if (trainer.badges.length <= lists.listTypes.length) {
                     var role = "";
                     const roles = interaction.member.roles.cache;
+                    //Validate if there is at least one role the accept the adding.
                     roles.forEach(element => {
                         if (element.name == lists.rolesPermission[0]) {
                             role = element.name;
@@ -129,6 +139,7 @@ module.exports = {
                             });
                         }
                     } else {
+                        //Validate that the role of the user is appropriate for the adding.
                         for (const index in lists.rolesPermission) {
                             if (role == lists.rolesPermission[index] && interaction.options.get('type').value == lists.listTypes[index]) {
                                 const type = interaction.options.get('type').value;

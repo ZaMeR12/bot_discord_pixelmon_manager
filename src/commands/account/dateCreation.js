@@ -1,6 +1,10 @@
 const _ = require('lodash');
 const Trainer = require('../../models/Trainer');
 
+
+/**
+ * Command to show date of account's creation of the user who call it
+ */
 module.exports = {
     deleted: false,
     name: "account_date",

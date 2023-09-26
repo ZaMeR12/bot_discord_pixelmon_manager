@@ -12,6 +12,10 @@ for (var type in lists.listTypes) {
     });
 };
 
+/**
+ * Command that can delete a badge sof someone.
+ * WARNING: The user have to have onely one leader role, but can be admin.
+ */
 module.exports = {
     deleted: false,
     name: "delete_badge",
@@ -41,6 +45,7 @@ module.exports = {
             };
             const trainer = await Trainer.findOne(queryExist);
             if (trainer) {
+                //Validate if the list of badges is empty.
                 if (!_.isEmpty(trainer.badges)) {
                     var role = "";
                     const roles = interaction.member.roles.cache;
@@ -129,6 +134,7 @@ module.exports = {
                             });
                         }
                     } else {
+                        //Validate the role of the user in the leaders roles.
                         for (const index in lists.rolesPermission) {
                             if (role == lists.rolesPermission[index] && interaction.options.get('type').value == lists.listTypes[index]) {
                                 const type = interaction.options.get('type').value;

@@ -1,6 +1,9 @@
 const _ = require('lodash');
 const Trainer = require('../../models/Trainer');
 
+/**
+ * Command that delete the account of the user who call it.
+ */
 module.exports = {
     deleted: false,
     name: "delete",

@@ -2,6 +2,9 @@ const _ = require('lodash');
 const Trainer = require('../../models/Trainer');
 const { ApplicationCommandOptionType } = require('discord.js');
 
+/**
+ * Commands that show minecraft username of the account of the user.
+ */
 module.exports = {
     deleted: false,
     name: "minecraft_pseudo",
@@ -29,7 +32,6 @@ module.exports = {
                     ephemeral:true
                 });
             } else {
-                
                 interaction.reply({
                     content: `**${user.username}**'s minecraft pseudo is **${account.minecraft_username}**`,
                     ephemeral:true

@@ -2,6 +2,10 @@ const {Schema,model,Date, default: mongoose} = require('mongoose');
 const lists =  require('../utils/Lists');
 require("dotenv").config();
 
+/**
+ * The schema for the mongo database.
+ * @type {Schema}
+ */
 const trainerSchema = new Schema({
     discord_id:{
         type: String,
@@ -41,4 +45,7 @@ const trainerSchema = new Schema({
     }
 });
 
+/**
+ * The model of the schema of the mongo database.
+ */
 module.exports = model('Trainer',trainerSchema);

@@ -2,6 +2,10 @@ const _ = require('lodash');
 const Trainer = require('../../models/Trainer');
 const { ApplicationCommandOptionType } = require('discord.js');
 
+
+/**
+ * Command to show badges of the user who call it
+ */
 module.exports = {
     deleted: false,
     name: "badges",

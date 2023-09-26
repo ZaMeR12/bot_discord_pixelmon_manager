@@ -2,6 +2,10 @@ const _ = require('lodash');
 const Trainer = require('../../models/Trainer');
 const {ApplicationCommandOptionType,PermissionFlagsBits} = require('discord.js');
 
+/**
+ * Comand for administrators to see the badges informations 
+ * of an discord's user of the server.
+ */
 module.exports = {
     deleted: false,
     name: "badges_info",

@@ -2,6 +2,9 @@ const _ = require('lodash');
 const Trainer = require('../../models/Trainer');
 const { ApplicationCommandOptionType } = require('discord.js');
 
+/**
+ * Command to show league infos about the account of the user who call it
+ */
 module.exports = {
     deleted: false,
     name: "league",

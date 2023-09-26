@@ -2,6 +2,10 @@ const _ = require('lodash');
 const Trainer = require('../../models/Trainer');
 const {ApplicationCommandOptionType,PermissionFlagsBits} = require('discord.js');
 
+/**
+ * Command to be able to delete an user for administrators.
+ * The confirmation can't be ephemeral, because of administration logs channels.
+ */
 module.exports = {
     deleted: false,
     name: "delete_user",
@@ -36,7 +40,8 @@ module.exports = {
                 await Trainer.findOneAndDelete(queryDelete);
                 interaction.reply({
                     content: `🗑️ ${user}'s account is deleted.`,
-                    ephemeral:true
+                    /** For administration trace. */
+                    ephemeral:false
                 });
             }
         } catch (error) {
