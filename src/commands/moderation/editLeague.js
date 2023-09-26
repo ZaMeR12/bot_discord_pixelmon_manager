@@ -3,18 +3,23 @@ const Trainer = require('../../models/Trainer');
 const {ApplicationCommandOptionType,PermissionFlagsBits} = require('discord.js');
 
 /**
- * Command for administrators to see the badges informations 
- * of an discord's user of the server.
+ * Command for administrators to edit the succeed of the league of an account.
  */
 module.exports = {
     deleted: false,
-    name: "badges_info",
-    description: "Infos about badges of an user.",
+    name: "edit_league",
+    description: "Edit the account of an user to indicate taht it succeed at the league",
     options:[
         {
             name:"user_tag",
             description: "The user you want to know the badges informations",
             type: ApplicationCommandOptionType.User,
+            required: true
+        },
+        {
+            name:"value",
+            description: "The value you want to change the account info.",
+            type: ApplicationCommandOptionType.Boolean,
             required: true
         }
     ],
@@ -23,6 +28,7 @@ module.exports = {
     callback: async (client, interaction) => {
         const discord_id = interaction.options.get('user_tag').value;
         const user = await client.users.fetch(discord_id);
+        const succeed = interaction.options.get('value').value;
         const queryExist = {
             discord_id: discord_id
         };
@@ -34,29 +40,19 @@ module.exports = {
                     ephemeral:true
                 });
             } else {
-                const messagePart1 = `
-                    # ${user}'s **badges** :
-
-                    ## Number of badges: ${account.badges.length}
-                `;
-                var messagePart2 = "";
-                if (!_.isEmpty(account.badges)){
-                    messagePart2 = `
-                        ### List of badges: \n
-                     `;
-                    for (const index in account.badges){
-                        messagePart2 += `
-                            > - Badge ${Number(index)+1}
-                            >  - Type: **${account.badges[index].type.toUpperCase()}**
-                            >  - Obtained: **${account.badges[index].obtained}**
-                        `;
-                    }
+                if (account.badges.length >= 8){
+                    account.succeedLeague = succeed;
+                    account.save();
+                    interaction.reply({
+                        content: `${user}'s league succeed info is edited.`,
+                        ephemeral:false
+                    });
+                } else {
+                    interaction.reply({
+                        content: `${user} doesn't have access to the league yet.`,
+                        ephemeral:true
+                    });
                 }
-                const message = messagePart1+messagePart2;
-                interaction.reply({
-                    content: message,
-                    ephemeral:true
-                });
             }
         } catch (error) {
             console.log(error);

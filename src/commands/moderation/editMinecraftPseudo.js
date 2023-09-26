@@ -44,7 +44,7 @@ module.exports = {
                     ephemeral:true
                 });
             } else {
-                await Trainer.updateOne(queryEdit);
+                await Trainer.updateOne({discord_id:discord_id},queryEdit);
                 interaction.reply({
                     content: `🖋️ ${user}'s minecraft pseudo is changed to ${minecraft_username}.`,
                     /** For administration trace. */
