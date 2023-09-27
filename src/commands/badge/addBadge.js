@@ -40,6 +40,7 @@ module.exports = {
     ],
 
     callback: async (client, interaction) => {
+        const administratorRole = "Admin";
         try {
             if (client.cooldowns.has(interaction.member.id)) {
                 interaction.reply({ content: "Please wait for cooldown to end", ephemeral: true });
@@ -111,11 +112,11 @@ module.exports = {
                             else if (element.name == lists.rolesPermission[18]) {
                                 role = element.name;
                             }
-                            if (element.name == "Admin") {
+                            if (element.name == administratorRole) {
                                 role = element.name;
                             }
                         });
-                        if (role == "Admin") {
+                        if (role == administratorRole) {
                             const type = interaction.options.get('type').value;
                             var badgeExist = false;
                             for (const badge in trainer.badges) {
@@ -150,45 +151,50 @@ module.exports = {
                                 });
                             }
                         } else {
+                            const type = interaction.options.get('type').value;
+                            var badgeExist = false;
+                            var roleValid = false;
                             //Validate that the role of the user is appropriate for the adding.
                             for (const index in lists.rolesPermission) {
                                 if (role == lists.rolesPermission[index] && interaction.options.get('type').value == lists.listTypes[index]) {
-                                    const type = interaction.options.get('type').value;
-                                    var badgeExist = false;
-                                    for (const badge in trainer.badges) {
-                                        if (trainer.badges[badge].type == type) {
-                                            badgeExist = true;
-                                        }
-                                    }
-                                    if (!badgeExist) {
-                                        //now, set cooldown
-                                        client.cooldowns.set(interaction.member.id, true);
+                                    roleValid = true;
+                                }
+                            }
+                            if (!roleValid) {
+                                interaction.reply({
+                                    content: `You don't have the right to add the badge **${type.toUpperCase()}**.`,
+                                    ephemeral: true
+                                });
+                            } else {
 
-                                        // After the time you specified, remove the cooldown
-                                        setTimeout(() => {
-                                            client.cooldowns.delete(interaction.user.id);
-                                        }, client.COOLDOWN_SECONDS * 1000);
-                                        
-                                        const date = new Date();
-                                        trainer.badges.push({
-                                            type: type,
-                                            obtained: date
-                                        });
-                                        await trainer.save();
-                                        interaction.reply(
-                                            {
-                                                content: `The badge of **${type.toUpperCase()}** is added to ${user}`
-                                            }
-                                        );
-                                    } else {
-                                        interaction.reply({
-                                            content: `The user ${user} can't have twice the same badge.`,
-                                            ephemeral: true
-                                        });
+                                for (const badge in trainer.badges) {
+                                    if (trainer.badges[badge].type == type) {
+                                        badgeExist = true;
                                     }
+                                }
+                                if (!badgeExist) {
+                                    //now, set cooldown
+                                    client.cooldowns.set(interaction.member.id, true);
+
+                                    // After the time you specified, remove the cooldown
+                                    setTimeout(() => {
+                                        client.cooldowns.delete(interaction.user.id);
+                                    }, client.COOLDOWN_SECONDS * 1000);
+
+                                    const date = new Date();
+                                    trainer.badges.push({
+                                        type: type,
+                                        obtained: date
+                                    });
+                                    await trainer.save();
+                                    interaction.reply(
+                                        {
+                                            content: `The badge of **${type.toUpperCase()}** is added to ${user}`
+                                        }
+                                    );
                                 } else {
                                     interaction.reply({
-                                        content: `You don't have the right to add a badge.`,
+                                        content: `The user ${user} can't have twice the same badge.`,
                                         ephemeral: true
                                     });
                                 }
