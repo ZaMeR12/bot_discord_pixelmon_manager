@@ -13,7 +13,7 @@
 
 ## What is this discord bot?
 
-This discord bot have for purpose to manager the league and the badges of informations of a user in a discord's server. Especially for server who use an RP minecraft Pixelmon server. **WARNING**: *The bot doesn't cretaes roles either administrate the server like moderator bot.*
+This discord bot have for purpose to manager the league and the badges of informations of a user in a discord's server. Especially for server who use an RP minecraft Pixelmon server. **WARNING**: *The bot doesn't creates roles either administrate the server like moderator bot.*
 
 
 ## Important stuff:
@@ -38,7 +38,22 @@ MONGO_SERVER = XXX
 
 > To know all each variables mean you can watch the tutorial of *Under Ctrl*
 
+### Server NodeJS:
 
+the application is coded in NodeJS. So you have to implement all the files in a server who can run NodeJS.
+
+#### Classic way to run the bot:
+In the server terminal
+```console
+node ./src/index.js
+```
+
+Result expected:
+```console
+node ./src/index.js
+DB connected
+✅ <Bot username> is online.
+```
 ### Lists of pokemon's types and discord's role for gym leaders
 
 These lists can be edited by the dev depending the need in the file *[Lists.js](./src/utils/Lists.js)* at the path ***src/utils/Lists.js***.
@@ -110,7 +125,7 @@ An exemple of the model of the database can be found at the file *[model_DB.json
 	"badges": [
 		{
 			"type": "fire",
-			"obtained":"023-09-20"
+			"obtained":"2023-09-20"
 		}
 	],
 	"inscryption": "2023-09-24T07:58:52.580+00:00"
@@ -145,11 +160,67 @@ An exemple of the model of the database can be found at the file *[model_DB.json
 
 ### Discord's Slash commands:
 
+Commands access:
+
+| Grade | Access |
+| ----------- | ----------- |
+| Administrator | All |
+| Gym leader | There commands + User commands |
+| User | User commands only |
+
 > * User:
->   * sad
+>   * **/create**: *Create an account of the user*
+>       * Params:
+>           * ***minecraft_username***: *The minecraft username of the user*
+>   * **/delete**: *Deleting the user account who call it*
+>   * **/account_date**: *Show the date of the creation of the account*
+>        * Params:
+>           * ***hide***: *Boolean that can decide if you want to hide the reply.*
+>   * **/badges**: *Show the user badges infos*
+>        * Params:
+>           * ***hide***: *Boolean that can decide if you want to hide the reply.*
+>   * **/league**: *Show the user league infos*
+>        * Params:
+>           * ***hide***: *Boolean that can decide if you want to hide the reply.*
+>   * **/minecraft_pseudo**: *Show the minecraft username of someone. (who have an account)*
+>       * Params:
+>           * ***user_tag***: *The discord's tag of a user*
 >
-> - Administrator:
->   * asdasd
+> - Administrator[^1]:
+>   * **/badges_info**: *Do the samething that the **/badges** but can select another user.*
+>       * Params:
+>           * ***user_tag***: *The discord's tag of a user*
+>   * **/creation_date_info**: *Do the samething that the **/account_date** but can select another user.*
+>       * Params:
+>           * ***user_tag***: *The discord's tag of a user*
+>   * **/league_info**: *Do the samething that the **/league** but can select another user.*
+>       * Params:
+>           * ***user_tag***: *The discord's tag of a user*
+>   * **/edit_minecraft**: *Edit the minecraft username of someone*
+>       * Params:
+>           * ***user_tag***: *The discord's tag of a user*
+>           * ***minecraft_username***: *The minecraft username of the user*
+>   * **/edit_league**: *Edit the validation of if the user succeed the league*
+>       * Params:
+>           * ***user_tag***: *The discord's tag of a user*
+>           * ***value***: *Boolean that indicate the validation*
+>   * **/edit_champion**: *Edit the validation of if the user is a champion*
+>       * Params:
+>           * ***user_tag***: *The discord's tag of a user*
+>           * ***value***: *Boolean that indicate the validation*
+>   * **/delete_user**: *Do the samething that the **/delete** but can select another user.*
+>       * Params:
+>           * ***user_tag***: *The discord's tag of a user*
 >
-> - Gym Leaders:
->   * asdasd
+> - Gym Leaders[^2]:
+>   * **/add_badge**: *Be able to add the badge of their type*
+>       * Params:
+>           * ***type***: *The type of the badge the user want to add to someone*
+>           * ***user_tag***: *The discord's tag of a user*
+>   * **/delete_badge**: *Be able to delete the badge of their type*
+>       * Params:
+>           * ***type***: *The type of the badge the user want to delete to someone*
+>           * ***user_tag***: *The discord's tag of a user*
+
+[^1]: Administrator can have more options and right on commands of others grades
+[^2]: The gym leaders can only do these commands with their associate type.
