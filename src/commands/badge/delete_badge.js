@@ -38,147 +38,152 @@ module.exports = {
 
     callback: async (client, interaction) => {
         try {
-            const discord_id = interaction.options.get('user_tag').value;
-            const user = await client.users.fetch(discord_id);
-            const queryExist = {
-                discord_id: discord_id
-            };
-            const trainer = await Trainer.findOne(queryExist);
-            if (trainer) {
-                //Validate if the list of badges is empty.
-                if (!_.isEmpty(trainer.badges)) {
-                    var role = "";
-                    const roles = interaction.member.roles.cache;
-                    roles.forEach(element => {
-                        if (element.name == lists.rolesPermission[0]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[1]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[3]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[4]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[5]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[6]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[7]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[8]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[9]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[10]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[11]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[12]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[13]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[14]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[15]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[16]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[17]) {
-                            role = element.name;
-                        }
-                        else if (element.name == lists.rolesPermission[18]) {
-                            role = element.name;
-                        }
-                        if (element.name == "Admin") {
-                            role = element.name;
-                        }
-                    });
-                    if (role == "Admin") {
-                        const type = interaction.options.get('type').value;
-                        var badgeExist = false;
-                        var indexBadge = "";
-                        for (const badge in trainer.badges) {
-                            if (trainer.badges[badge].type == type) {
-                                badgeExist = true;
-                                indexBadge = badge;
+            if (client.cooldowns.has(interaction.member.id)) {
+                interaction.reply({ content: "Please wait for cooldown to end", ephemeral: true });
+            } else {
+                const discord_id = interaction.options.get('user_tag').value;
+                const user = await client.users.fetch(discord_id);
+                const queryExist = {
+                    discord_id: discord_id
+                };
+                const trainer = await Trainer.findOne(queryExist);
+                if (trainer) {
+                    //Validate if the list of badges is empty.
+                    if (!_.isEmpty(trainer.badges)) {
+                        var role = "";
+                        const roles = interaction.member.roles.cache;
+                        roles.forEach(element => {
+                            if (element.name == lists.rolesPermission[0]) {
+                                role = element.name;
                             }
-                        }
-                        if (badgeExist) {
-                            var listbadges = trainer.badges;
-                            _.pull(listbadges, listbadges[indexBadge]);
-                            console.log(listbadges);
-                            await Trainer.updateOne({ discord_id: discord_id }, { badges: listbadges })
-                            interaction.reply({
-                                content: `The user ${user} have the badge **${type.toUpperCase()}** deleted.`,
-                                ephemeral: false
-                            });
-                        } else {
-                            interaction.reply({
-                                content: `The user ${user} doesn't already have the badge **${type.toUpperCase()}**.`,
-                                ephemeral: true
-                            });
-                        }
-                    } else {
-                        //Validate the role of the user in the leaders roles.
-                        for (const index in lists.rolesPermission) {
-                            if (role == lists.rolesPermission[index] && interaction.options.get('type').value == lists.listTypes[index]) {
-                                const type = interaction.options.get('type').value;
-                                var badgeExist = false;
-                                var indexBadge = "";
-                                for (const badge in trainer.badges) {
-                                    if (trainer.badges[badge].type == type) {
-                                        badgeExist = true;
-                                        indexBadge = badge;
-                                    }
+                            else if (element.name == lists.rolesPermission[1]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[3]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[4]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[5]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[6]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[7]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[8]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[9]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[10]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[11]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[12]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[13]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[14]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[15]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[16]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[17]) {
+                                role = element.name;
+                            }
+                            else if (element.name == lists.rolesPermission[18]) {
+                                role = element.name;
+                            }
+                            if (element.name == "Admin") {
+                                role = element.name;
+                            }
+                        });
+                        if (role == "Admin") {
+                            const type = interaction.options.get('type').value;
+                            var badgeExist = false;
+                            var indexBadge = "";
+                            for (const badge in trainer.badges) {
+                                if (trainer.badges[badge].type == type) {
+                                    badgeExist = true;
+                                    indexBadge = badge;
                                 }
-                                if (badgeExist) {
-                                    var listbadges = trainer.badges;
-                                    _.pull(listbadges, listbadges[indexBadge]);
-                                    await Trainer.updateOne({ discord_id: discord_id }, { badges: listbadges })
-                                    interaction.reply({
-                                        content: `The user ${user} have the badge **${type.toUpperCase()}** deleted.`
-                                    });
-                                } else {
-                                    interaction.reply({
-                                        content: `The user ${user} doesn't already have the badge **${type.toUpperCase()}**.`,
-                                        ephemeral: true
-                                    });
-                                }
+                            }
+                            if (badgeExist) {
+                                var listbadges = trainer.badges;
+                                _.pull(listbadges, listbadges[indexBadge]);
+                                console.log(listbadges);
+                                await Trainer.updateOne({ discord_id: discord_id }, { badges: listbadges })
+                                interaction.reply({
+                                    content: `The user ${user} have the badge **${type.toUpperCase()}** deleted.`,
+                                    ephemeral: false
+                                });
                             } else {
                                 interaction.reply({
-                                    content: `You don't have the right to delete a badge.`,
+                                    content: `The user ${user} doesn't already have the badge **${type.toUpperCase()}**.`,
                                     ephemeral: true
                                 });
                             }
+                        } else {
+                            //Validate the role of the user in the leaders roles.
+                            for (const index in lists.rolesPermission) {
+                                if (role == lists.rolesPermission[index] && interaction.options.get('type').value == lists.listTypes[index]) {
+                                    const type = interaction.options.get('type').value;
+                                    var badgeExist = false;
+                                    var indexBadge = "";
+                                    for (const badge in trainer.badges) {
+                                        if (trainer.badges[badge].type == type) {
+                                            badgeExist = true;
+                                            indexBadge = badge;
+                                        }
+                                    }
+                                    if (badgeExist) {
+                                        var listbadges = trainer.badges;
+                                        _.pull(listbadges, listbadges[indexBadge]);
+                                        await Trainer.updateOne({ discord_id: discord_id }, { badges: listbadges })
+                                        interaction.reply({
+                                            content: `The user ${user} have the badge **${type.toUpperCase()}** deleted.`
+                                        });
+                                    } else {
+                                        interaction.reply({
+                                            content: `The user ${user} doesn't already have the badge **${type.toUpperCase()}**.`,
+                                            ephemeral: true
+                                        });
+                                    }
+                                } else {
+                                    interaction.reply({
+                                        content: `You don't have the right to delete a badge.`,
+                                        ephemeral: true
+                                    });
+                                }
+                            }
                         }
+                    } else {
+                        interaction.reply({
+                            content: `The user ${user} doesn't have badges in the account`,
+                            ephemeral: true
+                        });
                     }
                 } else {
                     interaction.reply({
-                        content: `The user ${user} doesn't have badges in the account`,
+                        content: `The user ${user} didn't have an account.`,
                         ephemeral: true
                     });
                 }
-            } else {
-                interaction.reply({
-                    content: `The user ${user} didn't have an account.`,
-                    ephemeral: true
-                });
             }
+
         } catch (error) {
             console.log(error);
             // Handle any errors appropriately

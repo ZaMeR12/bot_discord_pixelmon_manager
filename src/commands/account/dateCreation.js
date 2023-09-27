@@ -11,30 +11,35 @@ module.exports = {
     description: "Commands to know how long you have created your account.",
 
     callback: async (client, interaction) => {
-        const discord_id = interaction.member.id;
-        const user = interaction.member;
-        const queryExist = {
-            discord_id: discord_id
-        };
         try {
-            const account = await Trainer.findOne(queryExist);
-            if (!account){
-                interaction.reply({
-                    content: `${user} doesn't have an account yet.`,
-                    ephemeral:true
-                });
+            if (client.cooldowns.has(interaction.member.id)) {
+                interaction.reply({ content: "Please wait for cooldown to end", ephemeral: true });
             } else {
-                interaction.reply({
-                    content: `The creation date is **${account.inscryption}** of ${user}'s account`,
-                    ephemeral:true
-                });
+                const discord_id = interaction.member.id;
+                const user = interaction.member;
+                const queryExist = {
+                    discord_id: discord_id
+                };
+                const account = await Trainer.findOne(queryExist);
+                if (!account) {
+                    interaction.reply({
+                        content: `${user} doesn't have an account yet.`,
+                        ephemeral: true
+                    });
+                } else {
+                    interaction.reply({
+                        content: `The creation date is **${account.inscryption}** of ${user}'s account`,
+                        ephemeral: true
+                    });
+                }
             }
+
         } catch (error) {
             console.log(error);
             // Handle any errors appropriately
             interaction.reply({
-                content:"There is a problem with the bot, please contact the developer.",
-                ephemeral:true
+                content: "There is a problem with the bot, please contact the developer.",
+                ephemeral: true
             });
         }
     }

@@ -1,4 +1,5 @@
-const { Client,IntentsBitField } = require("discord.js");
+const {Client,IntentsBitField } = require("discord.js");
+const Discord = require("discord.js");
 require("dotenv").config();
 const eventHandler = require("./handlers/eventHandler");
 const mongoose = require('mongoose');
@@ -13,6 +14,9 @@ const client = new Client(
         ]
     }
 );
+
+client.cooldowns = new Discord.Collection();
+client.COOLDOWN_SECONDS = 60;
 
 (async ()=>{
     try {
