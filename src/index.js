@@ -2,6 +2,12 @@ const { Client,IntentsBitField } = require("discord.js");
 require("dotenv").config();
 const eventHandler = require("./handlers/eventHandler");
 const mongoose = require('mongoose');
+// Use port number from the PORT environment variable or 3000 if not specified
+const port = process.env.PORT || 3000;
+const http = require('http');
+
+const server = http.createServer();
+
 
 const client = new Client(
     {
@@ -21,6 +27,7 @@ const client = new Client(
         console.log("DB connected");
         eventHandler(client);
         client.login(process.env.CONNECTION_BOT);
+        server.listen(port);
     } catch (error){
         console.log(error);
     }
