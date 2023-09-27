@@ -122,7 +122,15 @@ module.exports = {
                                 }
                             }
                             if (badgeExist) {
+                                //now, set cooldown
+                                client.cooldowns.set(interaction.member.id, true);
+
+                                // After the time you specified, remove the cooldown
+                                setTimeout(() => {
+                                    client.cooldowns.delete(interaction.user.id);
+                                }, client.COOLDOWN_SECONDS * 1000);
                                 var listbadges = trainer.badges;
+
                                 _.pull(listbadges, listbadges[indexBadge]);
                                 console.log(listbadges);
                                 await Trainer.updateOne({ discord_id: discord_id }, { badges: listbadges })
@@ -150,6 +158,14 @@ module.exports = {
                                         }
                                     }
                                     if (badgeExist) {
+                                        //now, set cooldown
+                                        client.cooldowns.set(interaction.member.id, true);
+
+                                        // After the time you specified, remove the cooldown
+                                        setTimeout(() => {
+                                            client.cooldowns.delete(interaction.user.id);
+                                        }, client.COOLDOWN_SECONDS * 1000);
+
                                         var listbadges = trainer.badges;
                                         _.pull(listbadges, listbadges[indexBadge]);
                                         await Trainer.updateOne({ discord_id: discord_id }, { badges: listbadges })

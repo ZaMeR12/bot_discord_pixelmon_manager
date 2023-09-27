@@ -23,6 +23,14 @@ module.exports = {
             if (client.cooldowns.has(interaction.member.id)) {
                 interaction.reply({ content: "Please wait for cooldown to end", ephemeral: true });
             } else {
+                //now, set cooldown
+                client.cooldowns.set(interaction.member.id, true);
+
+                // After the time you specified, remove the cooldown
+                setTimeout(() => {
+                    client.cooldowns.delete(interaction.user.id);
+                }, client.COOLDOWN_SECONDS * 1000);
+                
                 const discord_id = interaction.options.get('user_tag').value;
                 const user = await client.users.fetch(discord_id);
                 const queryExist = {

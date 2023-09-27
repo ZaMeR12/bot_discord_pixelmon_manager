@@ -124,6 +124,14 @@ module.exports = {
                                 }
                             }
                             if (!badgeExist) {
+                                //now, set cooldown
+                                client.cooldowns.set(interaction.member.id, true);
+
+                                // After the time you specified, remove the cooldown
+                                setTimeout(() => {
+                                    client.cooldowns.delete(interaction.user.id);
+                                }, client.COOLDOWN_SECONDS * 1000);
+
                                 const date = new Date();
                                 trainer.badges.push({
                                     type: type,
@@ -153,6 +161,14 @@ module.exports = {
                                         }
                                     }
                                     if (!badgeExist) {
+                                        //now, set cooldown
+                                        client.cooldowns.set(interaction.member.id, true);
+
+                                        // After the time you specified, remove the cooldown
+                                        setTimeout(() => {
+                                            client.cooldowns.delete(interaction.user.id);
+                                        }, client.COOLDOWN_SECONDS * 1000);
+                                        
                                         const date = new Date();
                                         trainer.badges.push({
                                             type: type,
